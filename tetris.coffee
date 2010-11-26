@@ -12,10 +12,10 @@ canvasWidth  = boardWidth * cellSize  + 100 # The pixel width of the canvas
 canvasHeight = boardHeight * cellSize       # The pixel height of the canvas
 
 board = []
-for y from 0 to boardHeight - 1
+for y in [0...boardHeight]
   row = []
   board.push row
-  for x from 0 to boardWidth - 1
+  for x in [0...boardWidth]
     row.push '#000'
 
 west  = 37
@@ -79,7 +79,8 @@ for shapeRow in shapeForm.split('\n\n')
                          [false, false, false, false]
                          [false, false, false, false]
                          [false, false, false, false]]
-      for x from 0 to 3
+      for x in [0..3]
+      # for x from 0 to 3
         shapeGroup[shape][y][x] = true if word[x] == '#'
 
 shapeColor = [
@@ -202,9 +203,9 @@ flattenBoard = ->
         board[fallingShapeY + y][fallingShapeX + x] = fallingColor
 
 resolveBoard = ->
-  for y from boardHeight - 1 to 0
+  for y in [(boardHeight - 1)..0]
     count = 0
-    for x from 0 to boardWidth - 1
+    for x in [0...boardWidth]
       count++ if board[y][x] != '#000'
     if count == boardWidth
       removeRow y
@@ -218,7 +219,7 @@ removeRow = (r) ->
   flashCount = 6
   originalRow = board[r]
   flashRow = []
-  for i from 0 to boardWidth - 1
+  for i in [0...boardWidth]
     flashRow[i] = '#FFF'
   flash = ->
     if board[r] == flashRow
@@ -231,7 +232,7 @@ removeRow = (r) ->
     if flashCount-- == 0
       clearInterval flasher
       board.unshift( board.splice r, 1 )
-      for i from 0 to boardWidth - 1
+      for i in [0...boardWidth]
         board[0][i] = '#000'
       if not resolveBoard()
         nextShape()
@@ -258,8 +259,8 @@ draw = ->
 
 drawBoard = ->
   context.strokeStyle = '#333'
-  for x from 0 to boardWidth - 1
-    for y from 0 to boardHeight - 1
+  for y in [0...boardHeight]
+    for x in [0...boardWidth]
       drawCell x * cellSize, y * cellSize, board[y][x]
 
 drawShape = ->
